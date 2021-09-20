@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+}
+
+.book-section {
+    margin-top: 50px;
+    position:relative;
+    display: inline-block;
+    text-align: center;
+    list-style: none;
+    overflow: visible;
+    line-height: 1.5;
+    height: 500px;
+    margin-right: 10%;
+    margin-left: 10%;
+    width: 80%;
+    background-color: palevioletred;
+}
+
+.book-container {
+    width:200px;
+    height: 90%;
+    flex-direction: column;
+    padding: 2px;
+    margin: 10px;
+    background-color: palegoldenrod;
+}
+
+.book-content {
+    flex-direction: column;
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    width: auto;
+    height: auto;
+    background-color: paleturquoise;
+    height:90%;
+
+}
+
+.book-info {
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
