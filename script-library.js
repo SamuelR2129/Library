@@ -1,3 +1,11 @@
+//INPUT INFO FOR BOOK ---------------------------------------------------
+
+document.getElementById('button-book').addEventListener('click', () => {
+    document.querySelector(".user-input").hidden = false;
+}, true);
+
+//ADDS BOOK TO LIBRARY-----------------------------------------------
+
 let myLibrary = [];
 
 //puts the user input into an object in myLIbrary
@@ -21,8 +29,7 @@ const addBook = (event) => {
 
     myLibrary.addTile();
 
-    console.log(myLibrary);
-    document.querySelector(".user-input").reset();
+    resetForm()
     
 };
 
@@ -30,11 +37,9 @@ document.getElementById('submit').addEventListener('click', addBook);
 
 
 function domCreateTile() {
-    const bookSection = document.querySelector(".book-section");
-    const bookContainer = document.createElement("div");
-    bookContainer.classList.add("book-container");
-    bookSection.appendChild(bookContainer);
+
     
+    const bookContainer = document.querySelector(".book-container");
     const bookContent = document.createElement("ul");
     bookContent.classList.add("book-content");
     bookContainer.appendChild(bookContent);
@@ -60,6 +65,12 @@ function domCreateTile() {
     bookContent.appendChild(bookInfo);
     }
 
+    function resetForm() {
+        const userInput =document.querySelector(".user-input")
+        userInput.reset();
+        userInput.hidden = true;
+
+    }
 
 
 
