@@ -26,6 +26,12 @@ body {
     background-color: palevioletred;
 }
 
+.wrap {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .book-container {
     width:auto;
     height: 300px;
@@ -45,7 +51,7 @@ body {
     margin: 0 5px;
     background-color: paleturquoise;
     height:100%;
-    width: 200px;
+    width: 150px;
 
 }
 
@@ -54,6 +60,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.delete-book {
+    height: 10%;
 }
 
 /*BOOK FORM --------------------------------------------- */
@@ -66,4 +76,6 @@ body {
     margin: auto 0;
     position:relative;
 }
+
+
 
