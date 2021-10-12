@@ -4,21 +4,23 @@ document.getElementById('button-book').addEventListener('click', () => {
     document.querySelector(".user-input").hidden = false;
 }, true);
 
-//ADDS BOOK TO LIBRARY-----------------------------------------------
-
 let myLibrary = [];
+
+let Book = function() {
+    this.title = document.getElementById("title").value,
+    this.author = document.getElementById("author").value,
+    this.length = document.getElementById("length").value,
+    this.read = readStatus(event)
+}
+
+//ADDS BOOK TO LIBRARY-----------------------------------------------
 
 //puts the user input into an object in myLIbrary
 const addBook = (event) => {
 
    event.preventDefault(); //stop form submitting
 
-    let Book = function() {
-        this.title = document.getElementById("title").value,
-        this.author = document.getElementById("author").value,
-        this.length = document.getElementById("length").value,
-        this.read = readStatus(event)
-    }
+
 
     //creates new book tile
     Book.prototype.addTile = () => {
