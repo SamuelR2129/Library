@@ -5,12 +5,13 @@ document.getElementById('button-book').addEventListener('click', () => {
 }, true);
 
 let myLibrary = [];
+let newBook;
 
 let Book = function() {
     this.title = document.getElementById("title").value,
     this.author = document.getElementById("author").value,
     this.length = document.getElementById("length").value,
-    this.read = readStatus(event)
+    this.read = document.querySelector('input[class="read"]:checked').value
 }
 
 //ADDS BOOK TO LIBRARY-----------------------------------------------
@@ -20,18 +21,20 @@ const addBook = (event) => {
 
    event.preventDefault(); //stop form submitting
 
-
-
     //creates new book tile
     Book.prototype.addTile = () => {
         domCreateTile(event);
     }
 
-    myLibrary = new Book();
+    newBook = new Book();
 
-    myLibrary.addTile();
+    newBook.addTile();
 
-    resetForm()
+    myLibrary.push(newBook); 
+
+    resetForm();
+
+    setData(); 
     
 };
 
@@ -57,23 +60,24 @@ function domCreateTile() {
 
     let bookInfo = document.createElement("li");
     bookInfo.classList.add("book-info");
-    bookInfo.textContent = myLibrary.title;
+    bookInfo.textContent = newBook.title;
     bookContent.appendChild(bookInfo);
 
     bookInfo = document.createElement("li");
     bookInfo.classList.add("book-info");
-    bookInfo.textContent = myLibrary.author;
+    bookInfo.textContent = newBook.author;
     bookContent.appendChild(bookInfo);
 
     bookInfo = document.createElement("li");
     bookInfo.classList.add("book-info");
-    bookInfo.textContent = myLibrary.length;
+    bookInfo.textContent = newBook.length;
     bookContent.appendChild(bookInfo);
 
-    bookInfo = document.createElement("li");
-    bookInfo.classList.add("book-info");
-    bookInfo.textContent = myLibrary.read;
-    bookContent.appendChild(bookInfo);
+    readButton = document.createElement("button");
+    readButton.classList.add("book-info");
+    readButton.setAttribute("id", "info-read")
+    readButton.textContent = newBook.read;
+    bookContent.appendChild(readButton);
 }
 
 function resetForm() {
@@ -84,7 +88,7 @@ function resetForm() {
 
 document.querySelector('.book-section').addEventListener('click', (event) => {
     deleteBook(event);
-    
+    toggleRead(event);
 });
 
 
@@ -100,18 +104,83 @@ function deleteBook(event) {
     }
 }
 
+function toggleRead(event) {
+    if (event.target.id === "info-read") {
+        myLibrary.read = !myLibrary.read;
 
-
-
-
-//stops NULL if no read status selected - NEEDS TO BE FIXED
-
-function readStatus(){
-    let readChecked = document.querySelector('input[class="read"]:checked').value
-    if (readChecked == null) {
-        return readChecked = "";
-    } else {
-        return readChecked;
+        if (myLibrary.read === false) {
+            readButton.textContent = "Not Read";
+            readButton.style.backgroundColor = "#e04f63";
+        }else {
+            readButton.textContent = "Read";
+            readButton.style.backgroundColor = "#63da63";
+        }
+        bookContent.appendChild(readButton); 
     }
 }
 
+
+// setting Library to be stored in local storage
+const setData = () => {
+    localStorage.setItem("library", JSON.stringify(myLibrary));
+}
+
+
+  
+const getData = () => {
+    myLibrary = JSON.parse(localStorage.getItem("library"));
+    console.log(myLibrary);
+}
+
+
+if(!localStorage.getItem("library")) {
+    setData();
+  } else {
+    getData();
+    render();
+  }
+
+  function render() {
+    myLibrary.forEach((book) => {
+        makeBook(book);
+    });
+  }
+
+  function makeBook(book) {
+    const addButton = document.getElementById("button-book");
+
+    const bookSection = document.querySelector(".book-section");
+    const bookContainer = document.createElement("div");
+    bookContainer.classList.add("book-container");
+    bookSection.insertBefore(bookContainer, addButton); 
+
+    const deleteBook = document.createElement("button");
+    deleteBook.classList.add("delete-book");
+    deleteBook.textContent = "X";
+    bookContainer.appendChild(deleteBook);
+
+    const bookContent = document.createElement("ul");
+    bookContent.classList.add("book-content");
+    bookContainer.appendChild(bookContent);
+
+    let bookInfo = document.createElement("li");
+    bookInfo.classList.add("book-info");
+    bookInfo.textContent = book.title;
+    bookContent.appendChild(bookInfo);
+
+    bookInfo = document.createElement("li");
+    bookInfo.classList.add("book-info");
+    bookInfo.textContent = book.author;
+    bookContent.appendChild(bookInfo);
+
+    bookInfo = document.createElement("li");
+    bookInfo.classList.add("book-info");
+    bookInfo.textContent = book.length;
+    bookContent.appendChild(bookInfo);
+
+    readButton = document.createElement("button");
+    readButton.classList.add("book-info");
+    readButton.setAttribute("id", "info-read")
+    readButton.textContent = book.read;
+    bookContent.appendChild(readButton);
+}
